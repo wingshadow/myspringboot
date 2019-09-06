@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.myland.platform.dao.AreaDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.myland.platform.entity.AreaDO" id="areaMap">
+        <result property="id" column="id"/>
+        <result property="pid" column="pid"/>
+        <result property="pids" column="pids"/>
+        <result property="name" column="name"/>
+        <result property="lev" column="lev"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+					id,
+						pid,
+						pids,
+						name,
+						lev
+			    </sql>
+
+	<select id="queryObject" resultType="com.myland.platform.entity.AreaDO">
+		select <include refid="Base_Column_List" /> from t_area where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.myland.platform.entity.AreaDO">
+		select <include refid="Base_Column_List" /> from t_area
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_area 
+	</select>
+	 
+	<insert id="insert" parameterType="com.myland.platform.entity.AreaDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_area
+		(
+			`pid`, 
+			`pids`, 
+			`name`, 
+			`lev`
+		)
+		values
+		(
+			#{pid}, 
+			#{pids}, 
+			#{name}, 
+			#{lev}
+		)
+	</insert>
+
+    <insert id="insertSelective"
+            parameterType="com.myland.platform.entity.AreaDO">
+        INSERT INTO t_area
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+<if test="id != null" >
+					id,                 </if>
+			<if test="pid != null" >
+					pid,                 </if>
+			<if test="pids != null" >
+					pids,                 </if>
+			<if test="name != null" >
+					name,                 </if>
+			<if test="lev != null" >
+					lev                </if>
+			        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="id != null" >
+                    #{id},                 </if>
+			                <if test="pid != null" >
+                    #{pid},                 </if>
+			                <if test="pids != null" >
+                    #{pids},                 </if>
+			                <if test="name != null" >
+                    #{name},                 </if>
+			                <if test="lev != null" >
+                    #{lev}                </if>
+			        </trim>
+    </insert>
+
+    <insert id="insertBatch" parameterType="com.myland.platform.entity.AreaDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_area
+		(
+			`pid`, 
+			`pids`, 
+			`name`, 
+			`lev`
+		)
+		values
+     <foreach collection="list" item="item" separator=",">
+		(
+			#{item.pid}, 
+			#{item.pids}, 
+			#{item.name}, 
+			#{item.lev}
+		)
+    </foreach>
+	</insert>
+
+
+	 
+	<update id="update" parameterType="com.myland.platform.entity.AreaDO">
+		update t_area 
+		<set>
+			<if test="pid != null">`pid` = #{pid}, </if>
+			<if test="pids != null">`pids` = #{pids}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="lev != null">`lev` = #{lev}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from t_area where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_area where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

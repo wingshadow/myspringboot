@@ -1,0 +1,30 @@
+.dropzone > .dz-default {
+  display:none;
+}
+
+.dropzone {
+  padding:0px !important;
+  border:1px solid #efefef;
+  width:120px;
+  height:120px !important;
+  overflow:hidden !important;
+   border-radius: 20px;
+   min-height:120px;
+}
+
+.dropzone .dz-remove{
+   position:absolute;
+   z-index:100000;
+   right:10px;
+   top:10px;
+   display:inline-block;
+   width:25px;
+   height:25px;
+   overflow:hidden;
+   background-image:url('${pageContext.request.contextPath}/content/images/close1.png');
+  background-repeat:no-repeat;
+}
+
+.dz-preview  {
+  margin:0px !important;
+}

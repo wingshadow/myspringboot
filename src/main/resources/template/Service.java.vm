@@ -1,0 +1,34 @@
+package ${package}.service;
+
+import com.github.pagehelper.PageInfo;
+import ${package}.entity.${className}DO;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * ${comments}
+ * 
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+public interface ${className}Service {
+	
+	${className}DO queryObject(${pk.attrType} ${pk.attrname});
+	
+	List<${className}DO> queryList(Map<String, Object> map);
+
+    PageInfo<${className}DO> queryListForPage(Map<String, Object> map,int pageNum, int pageSize);
+	
+	int queryTotal(Map<String, Object> map);
+	
+	void insert(${className}DO ${classname}Bean);
+
+    void insertSelective(${className}DO ${classname}Bean);
+	
+	void update(${className}DO ${classname}Bean);
+	
+	void delete(${pk.attrType} ${pk.attrname});
+	
+	void deleteBatch(${pk.attrType}[] ${pk.attrname}s);
+}

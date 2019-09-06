@@ -1,0 +1,95 @@
+package ${package}.controller;
+
+import java.util.List;
+import java.util.Map;
+
+import com.github.pagehelper.PageInfo;
+import com.myland.framework.utils.page.PageUtils;
+import com.myland.framework.utils.page.ResponseMessage;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import ${package}.entity.${className}DO;
+import ${package}.service.${className}Service;
+
+
+
+/**
+ * ${comments}
+ * 
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+@RestController
+@RequestMapping("${pathName}")
+public class ${className}Controller {
+	@Autowired
+	private ${className}Service ${classname}Service;
+	
+	/**
+	 * 列表
+	 */
+	@RequestMapping("/list")
+	@RequiresPermissions("${pathName}:list")
+	public ResponseMessage list(@RequestParam Map<String, Object> params){
+        int pageNum = Integer.parseInt(params.get("page").toString());
+        int pageSize = Integer.parseInt(params.get("limit").toString());
+
+        PageInfo<${className}DO> pageInfo = ${classname}Service.queryListForPage(params,pageNum,pageSize);
+        PageUtils pageUtil = new PageUtils(pageInfo);
+		
+		return ResponseMessage.ok().put("page", pageUtil);
+	}
+	
+	
+	/**
+	 * 信息
+	 */
+	@RequestMapping("/info/{${pk.attrname}}")
+	@RequiresPermissions("${pathName}:info")
+	public ResponseMessage info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
+		${className}DO ${classname}Bean = ${classname}Service.queryObject(${pk.attrname});
+		
+		return ResponseMessage.ok().put("${classname}DO", ${classname}Bean);
+	}
+	
+	/**
+	 * 保存
+	 */
+	@RequestMapping("/save")
+	@RequiresPermissions("${pathName}:save")
+	public ResponseMessage save(@RequestBody ${className}DO ${classname}Bean){
+		${classname}Service.insert(${classname}Bean);
+		
+		return ResponseMessage.ok();
+	}
+	
+	/**
+	 * 修改
+	 */
+	@RequestMapping("/update")
+	@RequiresPermissions("${pathName}:update")
+	public ResponseMessage update(@RequestBody ${className}DO ${classname}Bean){
+		${classname}Service.update(${classname}Bean);
+		
+		return ResponseMessage.ok();
+	}
+	
+	/**
+	 * 删除
+	 */
+	@RequestMapping("/delete")
+	@RequiresPermissions("${pathName}:delete")
+	public ResponseMessage delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s){
+		${classname}Service.deleteBatch(${pk.attrname}s);
+		
+		return ResponseMessage.ok();
+	}
+	
+}

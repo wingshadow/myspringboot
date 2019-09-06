@@ -1,0 +1,67 @@
+package ${package}.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.github.pagehelper.page.PageMethod;
+import java.util.List;
+import java.util.Map;
+import com.github.pagehelper.PageInfo;
+import ${package}.dao.${className}Dao;
+import ${package}.entity.${className}DO;
+import ${package}.service.${className}Service;
+
+
+
+@Service("${classname}Service")
+public class ${className}ServiceImpl implements ${className}Service {
+	@Autowired
+	private ${className}Dao ${classname}Dao;
+	
+	@Override
+	public ${className}DO queryObject(${pk.attrType} ${pk.attrname}){
+		return ${classname}Dao.queryObject(${pk.attrname});
+	}
+	
+	@Override
+	public List<${className}DO> queryList(Map<String, Object> map){
+		return ${classname}Dao.queryList(map);
+	}
+    @Override
+    public PageInfo<${className}DO> queryListForPage(Map<String, Object> map,int pageNum, int pageSize){
+
+        PageMethod.startPage(pageNum, pageSize);
+        List<${className}DO> lst = ${classname}Dao.queryList(map);
+        return new PageInfo<>(lst);
+    }
+	
+	@Override
+	public int queryTotal(Map<String, Object> map){
+		return ${classname}Dao.queryTotal(map);
+	}
+	
+	@Override
+	public void insert(${className}DO ${classname}Bean){
+		${classname}Dao.insert(${classname}Bean);
+	}
+
+    @Override
+    public void insertSelective(${className}DO ${classname}Bean){
+			${classname}Dao.insertSelective(${classname}Bean);
+	}
+	
+	@Override
+	public void update(${className}DO ${classname}){
+		${classname}Dao.update(${classname});
+	}
+	
+	@Override
+	public void delete(${pk.attrType} ${pk.attrname}){
+		${classname}Dao.delete(${pk.attrname});
+	}
+	
+	@Override
+	public void deleteBatch(${pk.attrType}[] ${pk.attrname}s){
+		${classname}Dao.deleteBatch(${pk.attrname}s);
+	}
+	
+}
